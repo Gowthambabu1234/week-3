@@ -17,7 +17,7 @@ if not api_key:
 
 client = genai.Client(api_key=api_key)
 def ask_llm(prompt):
-    for attempt in range(3):
+    for attempt in range(5):
         try:
             response = client.models.generate_content(
                 model="gemini-3.8-flash",
@@ -26,7 +26,7 @@ def ask_llm(prompt):
             return response.text or "No text response returned."
 
         except Exception as e:
-            if "503" in str(e) and attempt < 2:
+           if "503" in str(e) and attempt < 4:
                 print("Temporary server issue. Retrying in 10 seconds...")
                 time.sleep(10)
             else:
